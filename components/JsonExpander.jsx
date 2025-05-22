@@ -147,13 +147,15 @@ export default function JsonExpander() {
         <meta property="og:title" content={t.title} />
         <meta property="og:description" content={t.description} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://yourdomain.com" />
-        <meta property="og:image" content="https://yourdomain.com/og-image.png" />
+        <meta property="og:url" content="https://json-expander-web.vercel.app" />
+        <meta property="og:image" content="https://json-expander-web.vercel.app/og-image.png" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={t.title} />
         <meta name="twitter:description" content={t.description} />
-        <meta name="twitter:image" content="https://yourdomain.com/og-image.png" />
+        <meta name="twitter:image" content="https://json-expander-web.vercel.app/og-image.png" />
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8872858650284677"
+     crossorigin="anonymous"></script>
       </Head>
 
       <div className="p-6 max-w-4xl mx-auto">
