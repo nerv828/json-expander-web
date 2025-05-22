@@ -179,10 +179,7 @@ export default function JsonExpander() {
         <div className="bg-gray-50 p-4 rounded shadow mt-8">
           <h2 className="text-lg font-semibold mb-2">{t.sampleTitle}</h2>
           <pre className="text-sm bg-white p-2 rounded border overflow-x-auto">
-            {`{
-          "user": "Tom",
-          "profile": "{\\"age\\":25,\\"city\\":\\"Tokyo\\"}"
-        }`}
+            {`{"user": "Tom","profile": "{\\"age\\":25,\\"city\\":\\"Tokyo\\"}"}`}
           </pre>
           <p className="mt-2 text-gray-600">{t.sampleNote}</p>
         </div>
