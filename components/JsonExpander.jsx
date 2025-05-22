@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
+import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -69,7 +70,10 @@ const translations = {
     expandButton: "展开 JSON",
     error: "无效的 JSON 输入。",
     language: "语言",
-    description: "在线 JSON 嵌套字符串解析工具，快速格式化嵌套 JSON 内容。"
+    description: "在线 JSON 嵌套字符串解析工具，快速格式化嵌套 JSON 内容。",
+    about: "关于我们",
+    privacy: "隐私政策",
+    home: "首页"
   },
   en: {
     title: "JSON String Expander",
@@ -77,7 +81,10 @@ const translations = {
     expandButton: "Expand JSON",
     error: "Invalid JSON input.",
     language: "Language",
-    description: "Online tool to expand nested JSON strings into readable format."
+    description: "Online tool to expand nested JSON strings into readable format.",
+    about: "About",
+    privacy: "Privacy",
+    home: "Home"
   },
   ja: {
     title: "JSON文字列展開ツール",
@@ -85,7 +92,10 @@ const translations = {
     expandButton: "JSONを展開する",
     error: "無効なJSON入力です。",
     language: "言語",
-    description: "入れ子になったJSON文字列を展開・整形するオンラインツールです。"
+    description: "入れ子になったJSON文字列を展開・整形するオンラインツールです。",
+    about: "私たちについて",
+    privacy: "プライバシー",
+    home: "ホーム"
   }
 };
 
@@ -127,52 +137,58 @@ export default function JsonExpander() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="utf-8" />
 
-        {/* Open Graph */}
         <meta property="og:title" content={t.title} />
         <meta property="og:description" content={t.description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://yourdomain.com" />
         <meta property="og:image" content="https://yourdomain.com/og-image.png" />
 
-        {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={t.title} />
         <meta name="twitter:description" content={t.description} />
         <meta name="twitter:image" content="https://yourdomain.com/og-image.png" />
       </Head>
 
-      <div className="p-6 grid gap-6 max-w-4xl mx-auto">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">{t.title}</h1>
+      <div className="p-6 max-w-4xl mx-auto">
+        <nav className="flex justify-between items-center mb-6 border-b pb-4">
+          <div className="flex gap-4 text-sm">
+            <Link href="/" className="hover:underline">{t.home}</Link>
+            <Link href="/about" className="hover:underline">{t.about}</Link>
+            <Link href="/privacy" className="hover:underline">{t.privacy}</Link>
+          </div>
           <select
             value={lang}
             onChange={(e) => setLang(e.target.value)}
-            className="border rounded px-2 py-1"
+            className="border rounded px-2 py-1 text-sm"
           >
             <option value="zh">中文</option>
             <option value="en">English</option>
             <option value="ja">日本語</option>
           </select>
-        </div>
+        </nav>
 
-        <Textarea
-          value={inputJson}
-          onChange={(e) => setInputJson(e.target.value)}
-          rows={10}
-          placeholder={t.placeholder}
-        />
-        <Button onClick={handleExpand}>{t.expandButton}</Button>
-        {error && <p className="text-red-500">{error}</p>}
-        {outputJson && (
-          <Card>
-            <CardContent>
+        <h1 className="text-2xl font-bold mb-4">{t.title}</h1>
+
+        <div className="grid gap-6">
+          <Textarea
+            value={inputJson}
+            onChange={(e) => setInputJson(e.target.value)}
+            rows={10}
+            placeholder={t.placeholder}
+          />
+          <Button onClick={handleExpand}>{t.expandButton}</Button>
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {outputJson && (
+            <Card>
+              <CardContent>
              <pre
                 className="whitespace-pre-wrap break-words text-sm"
                 dangerouslySetInnerHTML={{ __html: syntaxHighlight(outputJson) }}
               />
-            </CardContent>
-          </Card>
-        )}
+              </CardContent>
+            </Card>
+          )}
+        </div>
       </div>
     </>
   );
