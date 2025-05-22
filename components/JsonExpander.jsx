@@ -73,7 +73,9 @@ const translations = {
     description: "在线 JSON 嵌套字符串解析工具，快速格式化嵌套 JSON 内容。",
     about: "关于我们",
     privacy: "隐私政策",
-    home: "首页"
+    home: "首页" ,
+    sampleTitle:"样例输入",
+    sampleNote: "粘贴嵌套 JSON，我们会自动展开。"
   },
   en: {
     title: "JSON String Expander",
@@ -84,7 +86,10 @@ const translations = {
     description: "Online tool to expand nested JSON strings into readable format.",
     about: "About",
     privacy: "Privacy",
-    home: "Home"
+    home: "Home",
+    sampleTitle:"Sample Input",
+        sampleNote: "Paste nested JSON and we will expand it automatically."
+
   },
   ja: {
     title: "JSON文字列展開ツール",
@@ -95,7 +100,9 @@ const translations = {
     description: "入れ子になったJSON文字列を展開・整形するオンラインツールです。",
     about: "私たちについて",
     privacy: "プライバシー",
-    home: "ホーム"
+    home: "ホーム",
+    sampleTitle:"サンプル入力",
+    sampleNote: "ネストされたJSONを貼り付けると、自動的に展開されます。"
   }
 };
 
@@ -168,6 +175,19 @@ export default function JsonExpander() {
         </nav>
 
         <h1 className="text-2xl font-bold mb-4">{t.title}</h1>
+
+        <div className="bg-gray-50 p-4 rounded shadow mt-8">
+          <h2 className="text-lg font-semibold mb-2">{t.sampleTitle}</h2>
+          <pre className="text-sm bg-white p-2 rounded border overflow-x-auto">
+            {`{
+          "user": "Tom",
+          "profile": "{\\"age\\":25,\\"city\\":\\"Tokyo\\"}"
+        }`}
+          </pre>
+          <p className="mt-2 text-gray-600">{t.sampleNote}</p>
+        </div>
+
+
 
         <div className="grid gap-6">
           <Textarea
