@@ -199,11 +199,7 @@ export default function JsonExpander() {
             placeholder={t.placeholder}
           />
           <Button onClick={handleExpand}>{t.expandButton}</Button>
-           <div className="flex justify-end">
-            <Button onClick={() => {
-              navigator.clipboard.writeText(output);
-            }}>{t.copy}</Button>
-          </div>
+
           {error && <p className="text-red-500 text-sm">{error}</p>}
           {outputJson && (
             <Card>
@@ -212,6 +208,11 @@ export default function JsonExpander() {
                 className="whitespace-pre-wrap break-words text-sm"
                 dangerouslySetInnerHTML={{ __html: syntaxHighlight(outputJson) }}
               />
+              <div className="flex justify-end">
+            <Button onClick={() => {
+              navigator.clipboard.writeText(outputJson);
+            }}>{t.copy}</Button>
+          </div>
               </CardContent>
             </Card>
             
