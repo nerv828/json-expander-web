@@ -75,7 +75,8 @@ const translations = {
     privacy: "隐私政策",
     home: "首页" ,
     sampleTitle:"样例输入",
-    sampleNote: "粘贴嵌套 JSON，我们会自动展开。"
+    sampleNote: "粘贴嵌套 JSON，我们会自动展开。",
+    copy: "复制结果"
   },
   en: {
     title: "JSON String Expander",
@@ -88,7 +89,8 @@ const translations = {
     privacy: "Privacy",
     home: "Home",
     sampleTitle:"Sample Input",
-        sampleNote: "Paste nested JSON and we will expand it automatically."
+        sampleNote: "Paste nested JSON and we will expand it automatically.",
+    copy: "Copy Output"
 
   },
   ja: {
@@ -102,7 +104,8 @@ const translations = {
     privacy: "プライバシー",
     home: "ホーム",
     sampleTitle:"サンプル入力",
-    sampleNote: "ネストされたJSONを貼り付けると、自動的に展開されます。"
+    sampleNote: "ネストされたJSONを貼り付けると、自動的に展開されます。",
+    copy: "出力をコピー"
   }
 };
 
@@ -196,6 +199,11 @@ export default function JsonExpander() {
             placeholder={t.placeholder}
           />
           <Button onClick={handleExpand}>{t.expandButton}</Button>
+           <div className="flex justify-end">
+            <Button onClick={() => {
+              navigator.clipboard.writeText(output);
+            }}>{t.copy}</Button>
+          </div>
           {error && <p className="text-red-500 text-sm">{error}</p>}
           {outputJson && (
             <Card>
@@ -206,6 +214,7 @@ export default function JsonExpander() {
               />
               </CardContent>
             </Card>
+            
           )}
         </div>
       </div>
