@@ -168,9 +168,6 @@ export default function JsonExpander() {
         <meta name="twitter:title" content={t.title} />
         <meta name="twitter:description" content={t.description} />
         <meta name="twitter:image" content="https://json-expander-web.vercel.app/og-image.png" />
-
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8872858650284677"
-     crossOrigin="anonymous"></script>
       </Head>
 
       <div className="p-6 max-w-4xl mx-auto">
