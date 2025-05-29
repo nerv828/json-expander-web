@@ -44,19 +44,19 @@ function syntaxHighlight(json) {
   return json.replace(
     /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(?:\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
     function (match) {
-      let cls = "text-gray-400"; // null
+      let cls = "text-gray-400";
       if (/^"/.test(match)) {
         if (/:$/.test(match)) {
-          cls = "text-blue-500"; // key
+          cls = "text-blue-500";
         } else {
-          cls = "text-green-600"; // string
+          cls = "text-green-600";
         }
       } else if (/true|false/.test(match)) {
-        cls = "text-purple-500"; // boolean
+        cls = "text-purple-500";
       } else if (/null/.test(match)) {
-        cls = "text-gray-400"; // null
+        cls = "text-gray-400";
       } else {
-        cls = "text-orange-500"; // number
+        cls = "text-orange-500";
       }
       return `<span class="${cls}">${match}</span>`;
     }
@@ -73,10 +73,10 @@ const translations = {
     description: "在线 JSON 嵌套字符串解析工具，快速格式化嵌套 JSON 内容。",
     about: "关于我们",
     privacy: "隐私政策",
-    home: "首页" ,
-    sampleTitle:"样例输入",
+    home: "首页",
+    sampleTitle: "样例输入",
     sampleNote: "粘贴嵌套 JSON，我们会自动展开。",
-    copy: "复制结果"
+    copyButton: "复制结果"
   },
   en: {
     title: "JSON String Expander",
@@ -88,10 +88,9 @@ const translations = {
     about: "About",
     privacy: "Privacy",
     home: "Home",
-    sampleTitle:"Sample Input",
-        sampleNote: "Paste nested JSON and we will expand it automatically.",
-    copy: "Copy Output"
-
+    sampleTitle: "Sample Input",
+    sampleNote: "Paste nested JSON and we will expand it automatically.",
+    copyButton: "Copy Output"
   },
   ja: {
     title: "JSON文字列展開ツール",
@@ -103,9 +102,9 @@ const translations = {
     about: "私たちについて",
     privacy: "プライバシー",
     home: "ホーム",
-    sampleTitle:"サンプル入力",
+    sampleTitle: "サンプル入力",
     sampleNote: "ネストされたJSONを貼り付けると、自動的に展開されます。",
-    copy: "出力をコピー"
+    copyButton: "出力をコピー"
   }
 };
 
@@ -121,6 +120,7 @@ export default function JsonExpander() {
   const [outputJson, setOutputJson] = useState("");
   const [error, setError] = useState("");
   const [lang, setLang] = useState("zh");
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     setLang(detectDefaultLang());
@@ -136,6 +136,17 @@ export default function JsonExpander() {
       setOutputJson(JSON.stringify(expanded, null, 4));
     } catch (e) {
       setError(t.error);
+    }
+  };
+
+  const handleCopy = async () => {
+    if (!outputJson) return;
+    try {
+      await navigator.clipboard.writeText(outputJson);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (e) {
+      console.error("Copy failed", e);
     }
   };
 
@@ -157,8 +168,9 @@ export default function JsonExpander() {
         <meta name="twitter:title" content={t.title} />
         <meta name="twitter:description" content={t.description} />
         <meta name="twitter:image" content="https://json-expander-web.vercel.app/og-image.png" />
+
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8872858650284677"
-     crossorigin="anonymous"></script>
+     crossOrigin="anonymous"></script>
       </Head>
 
       <div className="p-6 max-w-4xl mx-auto">
@@ -189,9 +201,7 @@ export default function JsonExpander() {
           <p className="mt-2 text-gray-600">{t.sampleNote}</p>
         </div>
 
-
-
-        <div className="grid gap-6">
+        <div className="grid gap-6 mt-6">
           <Textarea
             value={inputJson}
             onChange={(e) => setInputJson(e.target.value)}
@@ -199,23 +209,26 @@ export default function JsonExpander() {
             placeholder={t.placeholder}
           />
           <Button onClick={handleExpand}>{t.expandButton}</Button>
-
           {error && <p className="text-red-500 text-sm">{error}</p>}
           {outputJson && (
             <Card>
               <CardContent>
-             <pre
-                className="whitespace-pre-wrap break-words text-sm"
-                dangerouslySetInnerHTML={{ __html: syntaxHighlight(outputJson) }}
-              />
-              <div className="flex justify-end">
-            <Button onClick={() => {
-              navigator.clipboard.writeText(outputJson);
-            }}>{t.copy}</Button>
-          </div>
+                <div className="flex justify-between items-center mb-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleCopy}
+                    className="text-xs"
+                  >
+                    {copied ? "✓" : "📋"} {t.copyButton}
+                  </Button>
+                </div>
+                <pre
+                  className="whitespace-pre-wrap break-words text-sm"
+                  dangerouslySetInnerHTML={{ __html: syntaxHighlight(outputJson) }}
+                />
               </CardContent>
             </Card>
-            
           )}
         </div>
       </div>
